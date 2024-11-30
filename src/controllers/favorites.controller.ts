@@ -3,7 +3,6 @@ import { Favorite } from "../models/favorites.model";
 import { StatusCodes } from "http-status-codes";
 
 class FavoritesController {
-  // create a favorite
   createFavorite = async (req: Request, res: Response) => {
     const { noteId } = req.body;
 
@@ -17,7 +16,6 @@ class FavoritesController {
       .json({ favorite: newFavorite, msg: "Favorite has been created!" });
   };
 
-  // get all favorites
   getFavorites = async (req: Request, res: Response) => {
     const favorites = await Favorite.find({}).sort("-createdAt");
 

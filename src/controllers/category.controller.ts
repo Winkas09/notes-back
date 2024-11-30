@@ -3,7 +3,6 @@ import { Category } from "../models/category.model";
 import { StatusCodes } from "http-status-codes";
 
 class CategoryController {
-  // create a category
   createCategory = async (req: Request, res: Response) => {
     const { title } = req.body;
 
@@ -17,7 +16,6 @@ class CategoryController {
       .json({ category: newCategory, msg: "Category has been created!" });
   };
 
-  // get all categories
   getCategories = async (req: Request, res: Response) => {
     const categories = await Category.find({}).sort("-createdAt");
 
