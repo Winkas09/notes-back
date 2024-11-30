@@ -6,6 +6,7 @@ import categoryRouter from "./routes/category.route";
 import favoritesRouter from "./routes/favorites.route";
 require("dotenv").config();
 
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -16,10 +17,16 @@ app.get("/", (req, res) => {
   res.send("<h1>Note List using typescript</h1>");
 });
 
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'],
+  allowedHeaders: ['Content-Type'],
+}));
+
 // routes
-app.use("/note", noteRouter);
-app.use("/category", categoryRouter);
-app.use("/favorites", favoritesRouter);
+app.use("/api/note", noteRouter);
+app.use("/api/category", categoryRouter);
+app.use("/api/favorites", favoritesRouter);
 
 const startDB = async () => {
   try {
