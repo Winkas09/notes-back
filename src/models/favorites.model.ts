@@ -1,6 +1,5 @@
 import { Schema, Types, model } from "mongoose";
 
-// Creating an interface
 interface Favorite {
   noteId: Types.ObjectId;
 }

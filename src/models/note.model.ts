@@ -1,6 +1,5 @@
 import { Schema, Types, model } from "mongoose";
 
-// Creating an interface
 interface Note {
   title: string;
   body: string;

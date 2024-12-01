@@ -3,7 +3,6 @@ import { Note } from "../models/note.model";
 import { StatusCodes } from "http-status-codes";
 
 class NoteController {
-  // create a note
   createNote = async (req: Request, res: Response) => {
     const { title, body } = req.body;
 
@@ -17,7 +16,6 @@ class NoteController {
       .json({ note: newNote, msg: "Note has been created!" });
   };
 
-  // get all notes
   getNotes = async (req: Request, res: Response) => {
     const notes = await Note.find({}).sort("-createdAt");
 
@@ -30,7 +28,6 @@ class NoteController {
       .json({ notes, msg: "All Notes have been fetched!" });
   };
 
-  // get a single note
   getSingleNote = async (req: Request, res: Response) => {
     const { id } = req.params;
     const note = await Note.findById({ _id: id });
@@ -42,7 +39,6 @@ class NoteController {
     res.status(StatusCodes.OK).json({ note, msg: "Success" });
   };
 
-  // update note
   updateNote = async (req: Request, res: Response) => {
     const { id } = req.params;
     const updatedNote = await Note.findByIdAndUpdate({ _id: id }, req.body, {
@@ -58,7 +54,6 @@ class NoteController {
       .json({ note: updatedNote, msg: "Note has been updated" });
   };
 
-  // delete note
   deleteNote = async (req: Request, res: Response) => {
     const { id } = req.params;
     const deletedNote = await Note.findByIdAndDelete({ _id: id });
@@ -71,6 +66,7 @@ class NoteController {
       .status(StatusCodes.OK)
       .json({ note: deletedNote, msg: "Note has been deleted" });
   };
+
 }
 
 export const noteController = new NoteController();
