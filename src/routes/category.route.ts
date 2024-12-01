@@ -6,6 +6,11 @@ const router = express.Router();
 router
   .route("/")
   .post(categoryController.createCategory)
-  .get(categoryController.getCategories);
+  .get(categoryController.getCategories)
+  .delete(categoryController.deleteCategory);
+
+router
+  .route("/:category")
+  .get(categoryController.getNotesByCategory)
 
 export default router;

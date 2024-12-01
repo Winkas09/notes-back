@@ -66,6 +66,7 @@ class NoteController {
       .status(StatusCodes.OK)
       .json({ note: deletedNote, msg: "Note has been deleted" });
   };
+
 }
 
 export const noteController = new NoteController();

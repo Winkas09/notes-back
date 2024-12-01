@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Category } from "../models/category.model";
 import { StatusCodes } from "http-status-codes";
+import { Note } from "../models/note.model";
 
 class CategoryController {
   createCategory = async (req: Request, res: Response) => {
@@ -27,6 +28,30 @@ class CategoryController {
       .status(StatusCodes.OK)
       .json({ categories, msg: "All Categories have been fetched!" });
   };
+
+  getNotesByCategory = async (req: Request, res: Response) => {
+    const { category } = req.params;
+    const notes = await Note.find({ categoryId:category }).sort("-createdAt");
+
+    res
+      .status(StatusCodes.OK)
+      .json({ notes, msg: "All Notes have been fetched!" });
+
+  }
+
+  deleteCategory = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const deletedCategory = await Category.findByIdAndDelete({ _id: id });
+
+    if (!deletedCategory) {
+      throw new Error("Requested category not found!");
+    }
+
+    res
+      .status(StatusCodes.OK)
+      .json({ category: deletedCategory, msg: "Category has been deleted" });
 }
+  
+  }
 
 export default new CategoryController();
