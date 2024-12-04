@@ -8,4 +8,8 @@ router
   .post(favoritesController.createFavorite)
   .get(favoritesController.getFavorites);
 
+  router
+  .route("/toggle")
+  .post(favoritesController.toggleFavorite);
+
 export default router;

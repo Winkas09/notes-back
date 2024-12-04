@@ -7,6 +7,10 @@ router
   .route("/")
   .post(categoryController.createCategory)
   .get(categoryController.getCategories)
+
+
+router
+.route("/:id")
   .delete(categoryController.deleteCategory);
 
 router
