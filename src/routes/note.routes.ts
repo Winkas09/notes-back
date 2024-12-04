@@ -3,6 +3,8 @@ import { noteController } from "../controllers/note.controllers";
 
 const router = express.Router();
 
+router.route("/search").get(noteController.searchNotes);
+
 router.route("/").post(noteController.createNote).get(noteController.getNotes);
 
 router
@@ -10,5 +12,6 @@ router
   .get(noteController.getSingleNote)
   .patch(noteController.updateNote)
   .delete(noteController.deleteNote);
+
 
 export default router;

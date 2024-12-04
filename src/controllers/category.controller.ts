@@ -47,6 +47,8 @@ class CategoryController {
       throw new Error("Requested category not found!");
     }
 
+    await Note.updateMany({ categoryId: id }, { $unset: { categoryId: "" } });
+
     res
       .status(StatusCodes.OK)
       .json({ category: deletedCategory, msg: "Category has been deleted" });

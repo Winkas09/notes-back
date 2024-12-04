@@ -23,7 +23,6 @@ app.use(cors({
   allowedHeaders: ['Content-Type'],
 }));
 
-// routes
 app.use("/api/note", noteRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/favorites", favoritesRouter);
@@ -39,5 +38,4 @@ const startDB = async () => {
     console.log(error);
   }
 };
-// connecting to mongodb and starting the server
 startDB();

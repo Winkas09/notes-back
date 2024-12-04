@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Note } from "../models/note.model";
 import { StatusCodes } from "http-status-codes";
+import { Category } from "../models/category.model";
 
 class NoteController {
   createNote = async (req: Request, res: Response) => {
@@ -17,7 +18,7 @@ class NoteController {
   };
 
   getNotes = async (req: Request, res: Response) => {
-    const notes = await Note.find({}).sort("-createdAt");
+    const notes = await Note.find({}).sort("-createdAt").populate("categoryId");
 
     if (notes?.length === 0) {
       throw new Error("Note list is empty!");
@@ -30,7 +31,7 @@ class NoteController {
 
   getSingleNote = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const note = await Note.findById({ _id: id });
+    const note = await Note.findById({ _id: id }).populate("categoryId");
 
     if (!note) {
       throw new Error("Requested note not found!");
@@ -67,6 +68,30 @@ class NoteController {
       .json({ note: deletedNote, msg: "Note has been deleted" });
   };
 
-}
+  searchNotes = async (req: Request, res: Response) => {
+    const { query } = req.query;
 
+    if (!query) {
+      return res.status(StatusCodes.BAD_REQUEST).json({ msg: "Query must be provided." });
+    }
+
+    const notes = await Note.find({
+      $text: { $search: query as string }
+    }).populate("categoryId");
+
+    const categories = await Category.find({
+      $text: { $search: query as string }
+    });
+
+    const categoryNotes = await Note.find({
+      categoryId: { $in: categories.map((category) => category._id) }
+    }).populate("categoryId");
+
+    const allNotes = [...notes, ...categoryNotes];
+
+    res
+      .status(StatusCodes.OK)
+      .json({ notes: allNotes, msg: "Search results have been fetched!" });
+  };
+}
 export const noteController = new NoteController();
