@@ -4,6 +4,7 @@ import connectDB from "./config/db.config";
 import noteRouter from "./routes/note.routes";
 import categoryRouter from "./routes/category.route";
 import favoritesRouter from "./routes/favorites.route";
+import authRouter from "./routes/auth.route";
 require("dotenv").config();
 
 const cors = require('cors');
@@ -26,6 +27,7 @@ app.use(cors({
 app.use("/api/note", noteRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/favorites", favoritesRouter);
+app.use("/api/auth", authRouter);
 
 const startDB = async () => {
   try {
